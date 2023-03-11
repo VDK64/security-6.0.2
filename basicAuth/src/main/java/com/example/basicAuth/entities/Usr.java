@@ -2,17 +2,18 @@ package com.example.basicAuth.entities;
 
 import com.example.basicAuth.config.security.UserRole;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@AllArgsConstructor
 @Entity(name = "usr")
 @Table(name = "usr")
 public class Usr implements UserDetails {
@@ -21,30 +22,44 @@ public class Usr implements UserDetails {
     @GeneratedValue
     private long id;
 
-    private final String firstname;
+    private String firstname;
 
-    private final String lastname;
+    private String lastname;
 
     private String password;
 
-    private final String username;
+    private String username;
 
     @Enumerated(EnumType.STRING)
-    private final Set<UserRole> roles;
+    private Set<UserRole> roles;
 
-    private final boolean accountNonExpired;
+    private boolean accountNonExpired;
 
-    private final boolean accountNonLocked;
+    private boolean accountNonLocked;
 
-    private final boolean credentialsNonExpired;
+    private boolean credentialsNonExpired;
 
-    private final boolean enabled;
+    private boolean enabled;
 
+    public Usr() {
+    }
+
+    public Usr(String firstname, String lastname, String password, String username, Set<UserRole> roles) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.username = username;
+        this.roles = roles;
+        this.accountNonExpired = true;
+        this.accountNonLocked = true;
+        this.credentialsNonExpired = true;
+        this.enabled = true;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        roles.forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name())));
         return authorities;
     }
 
