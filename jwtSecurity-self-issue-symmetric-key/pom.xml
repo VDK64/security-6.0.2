@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>jwtSecurity</artifactId>
+	<artifactId>jwtSecurity-self-issue-symmetric-key</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>jwtSecurity</name>
+	<name>jwtSecurity-self-issue-symmetric-key</name>
 	<description>Securing REST API with JWT Token</description>
 	<properties>
 		<java.version>17</java.version>
